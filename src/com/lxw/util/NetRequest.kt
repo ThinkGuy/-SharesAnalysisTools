@@ -18,7 +18,7 @@ class NetRequest {
         var html: Document = Document("")
 
         try {
-            html = Jsoup.connect(url).timeout(4000).userAgent("Mozilla").get()
+            html = Jsoup.connect(url).timeout(10000).userAgent("Mozilla").get()
         } catch (e: SocketTimeoutException) {
             println("查不到 : " + url)
         } catch (e1: RuntimeException) {

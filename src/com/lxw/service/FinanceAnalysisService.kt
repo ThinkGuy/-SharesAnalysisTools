@@ -17,29 +17,11 @@ import kotlin.system.measureTimeMillis
 class FinanceAnalysisService {
     var dateList = ArrayList<String>()
     var finances = ArrayList<Finance>()
-    var npMap = TreeMap<Double, Int>()
-    var reVenueMap = TreeMap<Double, Int>()
+    var npMap = TreeMap<Double, String>()
+    var reVenueMap = TreeMap<Double, String>()
 
-    fun gatherFinanceInfo(type: Int, num: Int): TreeMap<String, TreeMap<String, String>> {
+    fun gatherFinanceInfo(type: Int, url: String): TreeMap<String, TreeMap<String, String>> {
         var outMap = TreeMap<String, TreeMap<String, String>>()
-
-        var url = """http://soft-f9.eastmoney.com/soft/gp13.php?code="""
-
-        if (type == 2) {
-            when (num.toString().length) {
-                1 -> url = url + "00000" + num + "02&exp=0&tp=4"
-                2 -> url = url + "0000" + num + "02&exp=0&tp=4"
-                3 -> url = url + "000" + num + "02&exp=0&tp=4"
-                4 -> url = url + "00" + num + "02&exp=0&tp=4"
-            }
-        } else {
-            when (num.toString().length) {
-                1 -> url = url + "60000" + num + "01&exp=0&tp=4"
-                2 -> url = url + "6000" + num + "01&exp=0&tp=4"
-                3 -> url = url + "600" + num + "01&exp=0&tp=4"
-                4 -> url = url + "60" + num + "01&exp=0&tp=4"
-            }
-        }
 
         var html = NetRequest().netRequest(url)
 
@@ -85,10 +67,54 @@ class FinanceAnalysisService {
         return outMap
     }
 
-    fun analysisFinancce(tpye: Int, num: Int) {
-        println(num)
+    fun analysisFinancce(type: Int, num: Int) {
+        var shareNum:String = ""
+        var url = """http://soft-f9.eastmoney.com/soft/gp13.php?code="""
 
-        val financesMap = gatherFinanceInfo(tpye, num)
+        if (type == 2) {
+            when (num.toString().length) {
+                1 -> {
+                    url = url + "00000" + num + "02&exp=0&tp=4"
+                    shareNum = "00000" + num
+                }
+                2 -> {
+                    url = url + "0000" + num + "02&exp=0&tp=4"
+                    shareNum = "0000" + num
+                }
+                3 -> {
+                    url = url + "000" + num + "02&exp=0&tp=4"
+                    shareNum = "000" + num
+                }
+                4 -> {
+                    url = url + "00" + num + "02&exp=0&tp=4"
+                    shareNum = "00" + num
+                }
+            }
+        } else {
+            when (num.toString().length) {
+                1 -> {
+                    url = url + "60000" + num + "01&exp=0&tp=4"
+                    shareNum = "60000" + num
+                }
+                2 -> {
+                    url = url + "6000" + num + "01&exp=0&tp=4"
+                    shareNum = "6000" + num
+                }
+                3 -> {
+                    url = url + "600" + num + "01&exp=0&tp=4"
+                    shareNum = "600" + num
+                }
+                4 -> {
+                    url = url + "60" + num + "01&exp=0&tp=4"
+                    shareNum = "60" + num
+                }
+            }
+        }
+
+        println()
+        println(shareNum)
+
+        val financesMap = gatherFinanceInfo(type, url)
         var finance = Finance()
 
         financesMap.forEach {
@@ -104,11 +130,11 @@ class FinanceAnalysisService {
                 when (it.key) {
                     Constants.NET_PROFITS -> {
                         finance.averageGrowthOfNPRate = result
-                        npMap.put(result, num)
+                        npMap.put(result, shareNum)
                     }
                     Constants.REVENUES -> {
                         finance.averageGrowthOfRVNRate = result
-                        reVenueMap.put(result, num)
+                        reVenueMap.put(result, shareNum)
                     }
                 }
             }
