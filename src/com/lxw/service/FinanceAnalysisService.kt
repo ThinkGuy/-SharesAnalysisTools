@@ -3,13 +3,9 @@ package com.lxw.service
 import com.lxw.model.Finance
 import com.lxw.util.Constants
 import com.lxw.util.NetRequest
-import javaslang.collection.List
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 import java.math.BigDecimal
-import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.system.measureTimeMillis

@@ -20,9 +20,9 @@ class NetRequest {
         try {
             html = Jsoup.connect(url).timeout(4000).userAgent("Mozilla").get()
         } catch (e: SocketTimeoutException) {
-            e.printStackTrace()
+            println("查不到 : " + url)
         } catch (e1: RuntimeException) {
-            e1.printStackTrace()
+            println("查不到 : " + url)
         }
 
         return html

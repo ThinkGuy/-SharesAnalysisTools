@@ -55,5 +55,22 @@ class Constants {
 
         const val FLOW_OF_EQUITY = "流通股本"
 
+        /** 报表 */
+
+        /**
+         * 报告期日期
+         */
+        const val REPORT_DATE = "报告期日期"
+
+        /**
+         * 净利润
+         */
+        const val NET_PROFITS = "净利润(元)"
+
+        /**
+         * 营业收入
+         */
+        const val REVENUES = "营业收入(元)"
+
     }
 }
